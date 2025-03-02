@@ -1,0 +1,7 @@
+lazy-lock.json
+result/
+.direnv/
+nvim/
+repl-result-out/
+plugins/
+nvim/
