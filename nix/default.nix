@@ -1,23 +1,35 @@
-{inputs, ...}: {
+{inputs, ...}: let
+  selfPath = builtins.unsafeDiscardStringContext "${inputs.self}";
+  vimPackage = ./p_neovim.nix;
+in {
   imports = [
     ./devshells.nix
   ];
   perSystem = {pkgs, ...}: let
-    call = pkgs.callPackage;
-    vimPackage = ./p_neovim.nix;
-  in rec {
-    neovim = call vimPackage {bundled = false;};
-    neovim-bundled = call vimPackage {pluginsStored = pkgs.callPackage ./p_symlinkCompile.nix {};};
-    default = neovim-bundled;
+    call = path: args: pkgs.callPackage path (args // {inherit selfPath;});
+    pluginsStored = call ./p_symlinkCompile.nix {inherit selfPath;};
+  in {
+    packages = rec {
+      pluginsMerged = pluginsStored;
+      neovim = call vimPackage {
+        bundled = false;
+        inherit pluginsStored;
+      };
+      neovim-bundled = call vimPackage {inherit pluginsStored;};
+      default = neovim-bundled;
+    };
   };
 
-  flake = let
-    vimPackage = ./p_neovim.nix;
-    selfPath = builtins.unsafeDiscardStringContext "${inputs.self}";
-  in {
-    overlays.default = final: prev: {
-      neovim = final.callPackage vimPackage {bundled = false;};
-      neovim-bundled = final.callPackage vimPackage {pluginsStored = final.callPackage ./p_symlinkCompile.nix {};};
+  flake = {
+    overlays.default = final: prev: let
+      call = path: args: final.callPackage path (args // {inherit selfPath;});
+      pluginsStored = call ./p_symlinkCompile.nix {inherit selfPath;};
+    in {
+      neovim = call vimPackage {
+        bundled = false;
+        inherit pluginsStored;
+      };
+      neovim-bundled = call vimPackage {inherit pluginsStored;};
     };
     tools = import "${selfPath}/nix/__tools.nix" {inherit (inputs.nixpkgs) lib;};
   };
