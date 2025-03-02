@@ -1,4 +1,8 @@
-{inputs, ...}: let
+{
+  inputs,
+  self,
+  ...
+}: let
   selfPath = builtins.unsafeDiscardStringContext "${inputs.self}";
   vimPackage = ./p_neovim.nix;
 in {
@@ -6,7 +10,7 @@ in {
     ./devshells.nix
   ];
   perSystem = {pkgs, ...}: let
-    call = path: args: pkgs.callPackage path (args // {inherit selfPath;});
+    call = path: args: pkgs.callPackage path (args // {inherit selfPath;} // {inherit self;});
     pluginsStored = call ./p_symlinkCompile.nix {inherit selfPath;};
   in {
     packages = rec {

@@ -4,6 +4,7 @@
   writeTextDir,
   selfPath,
   pkgs,
+  self,
 }: let
   tools = pkgs.callPackage "${selfPath}/nix/__tools.nix" {};
   # selfPath = builtins.unsafeDiscardStringContext "${self}";
@@ -13,7 +14,7 @@
     # Helper functions
     isValid = path: !lib.hasInfix "__" path;
     isLua = path: lib.hasSuffix ".lua" path && files.isValid path;
-    isNix = path: lib.hasSuffix ".nix" path && files.isValid path && !lib.hasSuffix "default.nix" path && lib.hasInfix "parse" path;
+    isNix = path: lib.hasSuffix ".nix" path && files.isValid path && !lib.hasSuffix "default.nix" path;
 
     # Path filtering
     fromDir = predicate: dir:
@@ -24,7 +25,8 @@
       core = files.fromDir (f: files.isLua f && !lib.hasInfix "plugins" f) "lua";
       plugins = files.fromDir (f: files.isLua f && lib.hasInfix "plugins" f) "lua";
     };
-    nix = files.fromDir files.isNix "nix";
+    nixPlugins = files.fromDir (f: files.isNix f && lib.hasInfix "plugins" f) "nix";
+    nixRoot = files.fromDir (f: files.isNix f && lib.hasInfix "root" f) "nix";
   };
 
   # File processing functions
@@ -64,7 +66,7 @@
 
     # Handle different return types from Nix modules
     nixToLua = path: let
-      nixModule = lib.callPackageWith ({inherit lib;} // tools) path {};
+      nixModule = lib.callPackageWith ({inherit lib;} // tools // {inherit self pkgs;}) path {};
 
       # Handle different return types
       processNixOutput = output:
@@ -109,12 +111,13 @@
 
   # Generate output files
   output = {
-    nixPlugins = map (f: process.mkLuaFile "/lua/plugins" f (process.nixToLua f)) files.nix;
+    nixPlugins = map (f: process.mkLuaFile "/lua/plugins" f (process.nixToLua f)) files.nixPlugins;
+    nixRoot = map (f: process.mkLuaFile "/lua" f (process.nixToLua f)) files.nixRoot;
     luaPlugins = map (f: process.mkLuaFile "/lua/plugins" f (builtins.readFile f)) files.lua.plugins;
     luaCore = map (f: process.mkLuaFile "/lua" f (builtins.readFile f)) files.lua.core;
   };
 in
   symlinkJoin {
     name = "nixNeovimAdditions";
-    paths = output.nixPlugins ++ output.luaPlugins ++ output.luaCore;
+    paths = output.nixPlugins ++ output.luaPlugins ++ output.luaCore ++ output.nixRoot;
   }

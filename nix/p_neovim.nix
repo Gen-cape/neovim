@@ -20,6 +20,7 @@
   selfPath,
   pluginsStored,
   chafa,
+  ...
 }: let
   devTools = [
     lua5_1
