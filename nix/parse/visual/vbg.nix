@@ -1,1 +1,1 @@
-{lazySimple, ...}: lazySimple "ThePrimeagen/vim-be-good"
+{lazyOnStartSimple, ...}: lazyOnStartSimple "ThePrimeagen/vim-be-good"

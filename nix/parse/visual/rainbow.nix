@@ -1,1 +1,1 @@
-{lazySimple, ...}: lazySimple "HiPhish/rainbow-delimiters.nvim"
+{lazyOnStartSimple, ...}: lazyOnStartSimple "HiPhish/rainbow-delimiters.nvim"

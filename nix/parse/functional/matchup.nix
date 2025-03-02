@@ -1,1 +1,1 @@
-{lazySimple, ...}: lazySimple "andymass/vim-matchup"
+{lazyOnStartSimple, ...}: lazyOnStartSimple "andymass/vim-matchup"

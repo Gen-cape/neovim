@@ -1,1 +1,1 @@
-{lazySimple, ...}: lazySimple "jbyuki/quickmath.nvim"
+{lazyOnStartSimple, ...}: lazyOnStartSimple "jbyuki/quickmath.nvim"

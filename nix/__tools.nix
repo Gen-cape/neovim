@@ -15,16 +15,13 @@
 
   simpleKeyMap = seq: action: createKeyMap seq action seq "n";
 
-  createDependency = plugin: depSpecs:
-    if depSpecs == []
-    then ""
-    else ''
-      deps.add {
-        source = ${lib.strings.escapeNixString plugin},
-        depends = {
-          ${formatList depSpecs}
-        },
-      }'';
+  createDependency = plugin: depSpecs: ''
+    deps.add {
+      source = ${lib.strings.escapeNixString plugin},
+      depends = {
+        ${formatList depSpecs}
+      },
+    }'';
 
   getPluginName = plugin: let
     baseName = builtins.baseNameOf plugin;
@@ -45,7 +42,7 @@
     setupHooks ? [],
     customHooks ? [],
     # Special flags
-    noSetup ? false,
+    noSetup ? true,
     # Additional options
     extraConfig ? {},
   }: let
@@ -54,11 +51,7 @@
 
     # Organize hooks with proper formatting
     formattedBeforeHooks = formatList (
-      (
-        if coreDeps != []
-        then [createDependency plugin coreDeps]
-        else []
-      )
+      [(createDependency plugin coreDeps)]
       ++ deps
       ++ beforeHooks
     );
@@ -127,10 +120,12 @@
       else ""
     }
 
-      before = function()${formattedBeforeHooks}end,
+      before = function()${formattedBeforeHooks}
+      end,
       ${formattedKeys}
       ${formattedCustomHooks}
-      after = function()${formattedAfterHooks}end,
+      after = function()${formattedAfterHooks}
+      end,
     }
   '';
 in rec {
