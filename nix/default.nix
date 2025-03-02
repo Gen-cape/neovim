@@ -36,5 +36,6 @@ in
       additions
       origLua
       origLuaPlugins
+      (map (f: writeTextDir "/lua/${rawName f}.lua" (builtins.readFile f)) luaAdditions)
     ];
   }
