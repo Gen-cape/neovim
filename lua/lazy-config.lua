@@ -32,5 +32,5 @@ require('lazy').setup {
   install = { colorscheme = { 'habamax' } },
   -- automatically check for plugin updates
   checker = { enabled = true },
-  lockfile = '~/neovim/lazy-lock.json',
+  lockfile = '~/neovim/lua/lazy-lock.json',
 }
