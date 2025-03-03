@@ -20,10 +20,15 @@
   selfPath,
   pluginsStored,
   chafa,
+  imagemagick,
+  fd,
   ...
 }: let
   devTools = [
     lua5_1
+    imagemagick
+    fd
+
     luarocks
     clang
     pkg-config
@@ -58,7 +63,11 @@
       withPython3 = false;
       withRuby = false;
       withNodeJs = false;
-      extraLuaPackages = p: with p; [magick];
+      extraLuaPackages = p:
+        with p; [
+          magick
+          fd
+        ];
       inherit extraPackages;
       customRC = runtimeConfig;
     }
