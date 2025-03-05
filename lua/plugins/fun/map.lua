@@ -1,3 +1,4 @@
 return {
-  { 'echasnovski/mini.map', version = false },
+  'echasnovski/mini.map',
+  version = false,
 }

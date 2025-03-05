@@ -253,22 +253,19 @@ return {
     -- Manually configure non-Mason servers
 
     -- Nix language server
-    local has_nixd, _ = pcall(require, 'lspconfig.server_configurations.nixd')
-    if has_nixd then
-      require('lspconfig').nixd.setup {
-        cmd = { 'nixd' },
-        settings = {
-          nixd = {
-            nixpkgs = {
-              expr = 'import <nixpkgs> {}',
-            },
-            formatting = {
-              command = { 'nix fmt || alejandra' },
-            },
-            options = {},
-          },
-        },
-      }
-    end
+    require('lspconfig').nixd.setup {
+      -- cmd = { 'nixd' },
+      -- settings = {
+      --   nixd = {
+      --     nixpkgs = {
+      --       expr = 'import <nixpkgs> {}',
+      --     },
+      --     formatting = {
+      --       command = { 'nix fmt || alejandra' },
+      --     },
+      --     options = {},
+      --   },
+      -- },
+    }
   end,
 }
