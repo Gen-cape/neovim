@@ -11,7 +11,7 @@ return {
     { 'j-hui/fidget.nvim', opts = {} },
 
     -- Enhanced Lua development for Neovim config
-    { 'folke/neodev.nvim', opts = {} },
+    -- { 'folke/neodev.nvim', opts = {} },
 
     -- Completion capabilities
     'hrsh7th/cmp-nvim-lsp',
