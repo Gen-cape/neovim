@@ -6,7 +6,37 @@ return {
     opts = {
       -- Enable all recommended plugins with default settings
       bigfile = { enabled = true },
-      dashboard = { enabled = true },
+      dashboard = {
+        enabled = true,
+        sections = {
+          { section = 'header' },
+          {
+            section = 'terminal',
+            cmd = 'chafa ~/nvim.jpg --format symbols --symbols vhalf --size 60x17 --stretch; sleep .1',
+            height = 17,
+            padding = 1,
+          },
+          { section = 'startup' },
+          {
+            pane = 2,
+            { title = '', padding = 10 },
+            { section = 'keys', gap = 1, padding = 5 },
+          },
+        },
+        preset = {
+          header = [[
+
+
+ ______ ___________ _____ ___________ _____
+ | ___ \_   _| ___ \_   _|_   _|  _  \  ___|
+ | |_/ / | | | |_/ / | |   | | | | | | |__
+ |    /  | | |  __/  | |   | | | | | |  __|
+ | |\ \ _| |_| |     | |  _| |_| |/ /| |___
+ \_| \_|\___/\_|     \_/  \___/|___/ \____/
+                  ]],
+        },
+      },
+
       explorer = {
         enabled = true,
         diagnostics = false,
