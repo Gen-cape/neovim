@@ -1,4 +1,4 @@
-return {
+return { -- Autocompletion
   'hrsh7th/nvim-cmp',
   event = 'InsertEnter',
   dependencies = {
@@ -10,18 +10,20 @@ return {
         end
         return 'make install_jsregexp'
       end)(),
+      dependencies = {},
     },
     'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
-    'hrsh7th/cmp-nvim-lsp-signature-help',
   },
   config = function()
     local cmp = require 'cmp'
     local luasnip = require 'luasnip'
-    luasnip.config.setup {}
 
     cmp.setup {
+      -- formatting = {
+      --   format = require('nvim-highlight-colors').format,
+      -- },
       snippet = {
         expand = function(args)
           luasnip.lsp_expand(args.body)
@@ -32,12 +34,15 @@ return {
       mapping = cmp.mapping.preset.insert {
         ['<C-n>'] = cmp.mapping.select_next_item(),
         ['<C-p>'] = cmp.mapping.select_prev_item(),
+
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<A-CR>'] = cmp.mapping.confirm { select = true },
+
+        ['<C-y>'] = cmp.mapping.confirm { select = true },
+        ['<Tab>'] = cmp.mapping.confirm { select = true },
+
         ['<C-Space>'] = cmp.mapping.complete {},
 
-        -- Snippet navigation
         ['<C-l>'] = cmp.mapping(function()
           if luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
@@ -49,19 +54,13 @@ return {
           end
         end, { 'i', 's' }),
       },
-
       sources = {
-        {
-          name = 'lazydev',
-          group_index = 0,
-        },
+        { name = 'copilot' },
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'path' },
-        { name = 'nvim_lsp_signature_help' },
         { name = 'otter' },
         { name = 'dotenv' },
-        { name = 'copilot' },
       },
     }
   end,
