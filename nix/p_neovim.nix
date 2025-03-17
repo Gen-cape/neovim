@@ -22,6 +22,8 @@
   chafa,
   imagemagick,
   fd,
+  typst,
+  ghostscript,
   ...
 }: let
   devTools = [
@@ -34,6 +36,9 @@
     pkg-config
     cargo
     nodejs
+    typst
+
+    ghostscript
   ];
 
   languageTools = [

@@ -66,7 +66,7 @@ return {
       dim = { enabled = true },
       git = { enabled = true },
       gitbrowse = { enabled = true },
-      -- image = { enabled = true },
+      image = { enabled = true },
       layout = { enabled = true },
       -- lazygit = { enabled = true },
       notify = { enabled = true },
