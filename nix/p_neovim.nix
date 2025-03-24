@@ -24,6 +24,7 @@
   fd,
   typst,
   ghostscript,
+  llvmPackages,
   ...
 }: let
   devTools = [
@@ -48,6 +49,10 @@
     alejandra
     tinymist
     chafa
+
+    llvmPackages.clang
+    llvmPackages.lldb
+    llvmPackages.clang-tools
   ];
   extraPackages = devTools ++ languageTools;
 

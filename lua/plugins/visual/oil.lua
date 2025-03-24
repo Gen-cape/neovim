@@ -1,6 +1,6 @@
 return { -- File explorer
   'stevearc/oil.nvim',
-  -- lazy = true,
+  lazy = false,
   -- cmd = 'Oil',
   opts = {
     view_options = {
