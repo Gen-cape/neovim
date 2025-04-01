@@ -1,5 +1,6 @@
 return {
   'ysmb-wtsg/in-and-out.nvim',
+  event = 'VeryLazy',
   keys = {
     {
       '<S-CR>',
