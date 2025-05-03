@@ -78,6 +78,7 @@ return {
 
     local servers = {
       clangd = {},
+      qmlls = { cmd = { 'qmlls', '-E' } },
       pyright = {},
       lua_ls = {
         settings = {
