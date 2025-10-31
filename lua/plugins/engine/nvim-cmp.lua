@@ -1,31 +1,31 @@
 return {
-  "hrsh7th/nvim-cmp",
+  'hrsh7th/nvim-cmp',
 
   dependencies = {
     {
-      "L3MON4D3/LuaSnip",
+      'L3MON4D3/LuaSnip',
       build = (function()
-        if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
+        if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
           return
         end
-        return "make install_jsregexp"
+        return 'make install_jsregexp'
       end)(),
       dependencies = {},
     },
-    "saadparwaiz1/cmp_luasnip",
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-path",
+    'saadparwaiz1/cmp_luasnip',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-path',
   },
 
-  event = "InsertEnter",
+  event = 'InsertEnter',
 
   config = function()
-    local cmp = require("cmp")
-    local luasnip = require("luasnip")
+    local cmp = require 'cmp'
+    local luasnip = require 'luasnip'
 
-    cmp.setup({
+    cmp.setup {
       formatting = {
-        format = require("nvim-highlight-colors").format,
+        format = require('nvim-highlight-colors').format,
       },
 
       window = {
@@ -39,42 +39,42 @@ return {
         end,
       },
 
-      completion = { completeopt = "menu,menuone,noinsert" },
+      completion = { completeopt = 'menu,menuone,noinsert' },
 
-      mapping = cmp.mapping.preset.insert({
+      mapping = cmp.mapping.preset.insert {
         ['<C-n>'] = cmp.mapping.select_next_item(),
         ['<A-CR>'] = cmp.mapping.select_next_item(),
         ['<C-p>'] = cmp.mapping.select_prev_item(),
         ['<C-CR>'] = cmp.mapping.select_prev_item(),
 
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
 
-        ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-        ["<Tab>"] = cmp.mapping.confirm({ select = true }),
+        ['<C-y>'] = cmp.mapping.confirm { select = true },
+        -- ["<Tab>"] = cmp.mapping.confirm({ select = true }),
 
-        ["<C-Space>"] = cmp.mapping.complete({}),
+        ['<C-Space>'] = cmp.mapping.complete {},
 
-        ["<C-l>"] = cmp.mapping(function()
+        ['<C-l>'] = cmp.mapping(function()
           if luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
           end
-        end, { "i", "s" }),
-        ["<C-h>"] = cmp.mapping(function()
+        end, { 'i', 's' }),
+        ['<C-h>'] = cmp.mapping(function()
           if luasnip.locally_jumpable(-1) then
             luasnip.jump(-1)
           end
-        end, { "i", "s" }),
-      }),
+        end, { 'i', 's' }),
+      },
 
       sources = {
-        { name = "copilot" },
-        { name = "nvim_lsp" },
-        { name = "luasnip" },
-        { name = "path" },
-        { name = "otter" },
-        { name = "dotenv" },
+        { name = 'copilot' },
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' },
+        { name = 'path' },
+        { name = 'otter' },
+        { name = 'dotenv' },
       },
-    })
+    }
   end,
 }
