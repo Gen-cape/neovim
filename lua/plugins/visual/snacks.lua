@@ -36,7 +36,7 @@ _____ ___________ _____ ___________ ______
       },
 
       explorer = {
-        enabled = true,
+        enabled = false,
         diagnostics = false,
         diagnostics_open = false,
       },

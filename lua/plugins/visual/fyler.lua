@@ -1,6 +1,26 @@
 return {
   'A7Lavinraj/fyler.nvim',
-  event = 'VeryLazy',
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
-  opts = { icon_provider = 'nvim_web_devicons' },
+  dependencies = { 'nvim-mini/mini.icons' },
+  branch = 'stable',
+  opts = {},
+  keys = {
+    {
+      '<leader>e',
+      function()
+        local win_opts = {
+          kind = 'split_right_most',
+          width = 35,
+        }
+
+        local cwd = os.getenv 'PWD'
+        if cwd then
+          win_opts.dir = cwd
+        end
+
+        require('fyler').toggle(win_opts)
+      end,
+      mode = 'n',
+      desc = 'Toggle Fyler (right split) in current directory',
+    },
+  },
 }
